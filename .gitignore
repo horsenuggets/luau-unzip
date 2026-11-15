@@ -33,3 +33,8 @@ aftman.toml
 
 # Repo-specific
 *.hexproj
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
