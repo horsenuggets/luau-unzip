@@ -56,7 +56,23 @@ let
       '';
     };
 
-  manifest = builtins.fromTOML (builtins.readFile ./pesde.toml);
+  fromReleaseArchive = { name, exeName, version, artifactName, sha256 }:
+    pkgs.stdenv.mkDerivation {
+      name = "${exeName}-${version}";
+      src = pkgs.fetchurl {
+        url = "https://github.com/${name}/releases/download/${version}/${artifactName}";
+        inherit sha256;
+      };
+      nativeBuildInputs = [ pkgs.autoPatchelfHook pkgs.unzip ];
+      buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+      sourceRoot = ".";
+      dontStrip = true;
+      installPhase = ''
+        runHook preInstall
+        install -Dm755 ${exeName} "$out/bin/${exeName}"
+        runHook postInstall
+      '';
+    };
 
 in
 pkgs.mkShell {
@@ -89,31 +105,19 @@ pkgs.mkShell {
       artifactName = "moonwave-extractor-v1.3.0-linux.zip";
       sha256 = "RMFdmEat+F/4WdLtcl/d8r1D6eRp8xsk05zEmMiYi2M=";
     })
-    (fromGithubRelease {
-      name = "JohnnyMorganz/luau-lsp";
+    (fromReleaseArchive {
+      name = "horsenuggets/luau-lsp";
       exeName = "luau-lsp";
-      version =
-        assert pkgs.lib.hasPrefix "=" manifest.dev_dependencies.luau-lsp.version;
-        pkgs.lib.removePrefix "=" manifest.dev_dependencies.luau-lsp.version;
+      version = "1.70.1-horse.2.0";
       artifactName = "luau-lsp-linux-x86_64.zip";
-      sha256 = "vyQUyJnBSRJl/18Y7sbk2f2BW5pzXz+YUcJ9Cv2zngo=";
+      sha256 = "259b0271e79b78fe12804c176398439c8b7fee2d42874f61d37aee888b4de638";
     })
-    (pkgs.stdenv.mkDerivation rec {
-      pname = "styluau";
+    (fromReleaseArchive {
+      name = "horsenuggets/styluau";
+      exeName = "styluau";
       version = "2.6.0-horse.1.0";
-      src = pkgs.fetchurl {
-        url = "https://github.com/horsenuggets/styluau/releases/download/${version}/styluau-linux-x86_64.zip";
-        sha256 = "534fd84923fd9e39adbb61be494ed632d42f8bdf6d2cf3f9edaa19bf37cfaafb";
-      };
-      nativeBuildInputs = [ pkgs.autoPatchelfHook pkgs.unzip ];
-      buildInputs = [ pkgs.stdenv.cc.cc.lib ];
-      sourceRoot = ".";
-      dontStrip = true;
-      installPhase = ''
-        runHook preInstall
-        install -Dm755 styluau "$out/bin/styluau"
-        runHook postInstall
-      '';
+      artifactName = "styluau-linux-x86_64.zip";
+      sha256 = "534fd84923fd9e39adbb61be494ed632d42f8bdf6d2cf3f9edaa19bf37cfaafb";
     })
   ];
 
