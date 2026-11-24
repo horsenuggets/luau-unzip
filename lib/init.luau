@@ -121,7 +121,7 @@ type ZipEntryInner = {
 	children: { ZipEntry },
 }
 
--- stylua: ignore
+-- [styluau] ignore
 --[=[
 	@within ZipEntry	
 	@type MadeByOS "FAT" | "AMIGA" | "VMS" | "UNIX" | "VM/CMS" | "Atari ST" | "OS/2" | "MAC" | "Z-System" | "CP/M" | "NTFS" | "MVS" | "VSE" | "Acorn RISCOS" | "VFAT" | "Alternate MVS" | "BeOS" | "TANDEM" | "OS/400" | "OS/X" | "Unknown"     

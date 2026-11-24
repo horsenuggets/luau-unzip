@@ -3,7 +3,7 @@ local fs = require("@lune/fs")
 local stdio = require("@lune/stdio")
 local process = require("@lune/process")
 
--- stylua: ignore
+-- [styluau] ignore
 local function createZip(version: number): buffer
     version = version or math.random(63, 100)
     print("Using version:", version)

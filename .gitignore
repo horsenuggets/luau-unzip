@@ -16,13 +16,15 @@
 .env
 .local
 .mcp.json
-.vscode
+/.vscode/*
+!/.vscode/extensions.json
 
 # Generated files
 *.bak
 *.gen.*
 *.lock
 !.assetfile.lock
+!/pesde.lock
 /*sourcemap.json
 
 # Legacy
@@ -30,6 +32,15 @@ aftman.toml
 
 # Project
 /TODO.md
+
+# Worktrees
+/.worktrees/
+/.wt/
+
+# Pesde dependencies
+/.pesde/
+/luau_packages/
+/lune_packages/
 
 # Repo-specific
 *.hexproj

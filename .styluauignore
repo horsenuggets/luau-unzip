@@ -1,0 +1,9 @@
+# Dependencies and vendored code.
+**/Submodules/**
+**/luau_packages/**
+**/lune_packages/**
+
+# Worktrees and historical fixtures.
+**/.worktrees/**
+**/.wt/**
+tests/data/**
