@@ -25,36 +25,36 @@ local CHUNK_SIZE = 8 * 1024 -- 8 KB
 --- would only happen if it can continue writing chunks after the previous data has been read
 --- (which lune is waiting for the process to exit to begin doing).
 function exports.readToEnd(reader: ChildProcessReader): string
-  local chunks = {}
-  while true do
-    local chunk = reader:read(CHUNK_SIZE)
-    if chunk == nil then
-      break
-    end
+	local chunks = {}
+	while true do
+		local chunk = reader:read(CHUNK_SIZE)
+		if chunk == nil then
+			break
+		end
 
-    table.insert(chunks, chunk)
-  end
+		table.insert(chunks, chunk)
+	end
 
-  return table.concat(chunks)
+	return table.concat(chunks)
 end
 
 --- Streamed comparison of a reader against an expected value. Useful for comparison of large
 --- streams of data.
 function exports.readerEq(reader: ChildProcessReader, expected: string): boolean
-  local offset = 0
+	local offset = 0
 
-  while true do
-    local chunk = reader:read(CHUNK_SIZE)
-    if chunk == nil then
-      return offset == #expected
-    end
+	while true do
+		local chunk = reader:read(CHUNK_SIZE)
+		if chunk == nil then
+			return offset == #expected
+		end
 
-    if chunk ~= string.sub(expected, offset + 1, offset + #chunk) then
-      return false
-    end
+		if chunk ~= string.sub(expected, offset + 1, offset + #chunk) then
+			return false
+		end
 
-    offset += #chunk
-  end
+		offset += #chunk
+	end
 end
 
 return exports
