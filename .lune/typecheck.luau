@@ -7,7 +7,7 @@ local CommandBuilder = require("./util/exec")
 process.exit(
 	CommandBuilder.new("luau-lsp")
 		:withArg("analyze")
-		:withArgs({ "--settings", ".vscode/settings.json" })
+		:withArg("--platform=standard")
 		:withArgs({ "--ignore", "'**/*_packages/**/*'" })
 		:withArg(".")
 		:withStdioStrategy("forward")
