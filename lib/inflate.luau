@@ -21,7 +21,7 @@ end
 -- Data class for managing compression state and buffers
 local Data = {}
 export type Data = typeof(setmetatable({} :: DataInner, { __index = Data }))
--- stylua: ignore
+-- [styluau] ignore
 export type DataInner = {
     source: buffer,      -- Input buffer containing compressed data
     sourceIndex: number, -- Current position in source buffer
@@ -63,7 +63,7 @@ local distBits = table.create(30, 0)
 local distBase = table.create(30, 0)
 
 -- Special ordering of code length codes used in dynamic Huffman trees
--- stylua: ignore
+-- [styluau] ignore
 local clcIndex = {
     16, 17, 18, 0, 8, 7, 9, 6,
     10, 5, 11, 4, 12, 3, 13, 2,
